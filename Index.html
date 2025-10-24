@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Karakunku Farm Pest & Soil Detector</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.19.0"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f8f4;
+      text-align: center;
+      padding: 1rem;
+    }
+    h2 { color: #2a6a32; }
+    input, button {
+      margin: 0.5rem;
+      padding: 0.6rem;
+      font-size: 1rem;
+    }
+    img {
+      width: 90%;
+      max-width: 400px;
+      margin-top: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px #ccc;
+    }
+    #result {
+      margin-top: 15px;
+      padding: 10px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 5px #ccc;
+      text-align: left;
+      display: inline-block;
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Karakunku Farm Pest & Soil Health Detector</h2>
+  <p>Take or upload a photo of your crop or soil to detect issues.</p>
+  
+  <input id="file" type="file" accept="image/*" capture="environment" />
+  <br />
+  <img id="preview" alt="Preview will appear here" />
+  <br />
+  <button id="analyzeBtn">Analyze Image</button>
+
+  <div id="result"></div>
+
+  <script>
+    const fileInput = document.getElementById('file');
+    const preview = document.getElementById('preview');
+    const resultDiv = document.getElementById('result');
+
+    let modelLoaded = false;
+
+    async function loadModel() {
+      try {
+        // Placeholder model — replace this path with your TF.js model if available.
+        // e.g., const model = await tf.loadLayersModel('model/model.json');
+        modelLoaded = true;
+        console.log('Model ready (placeholder).');
+      } catch (err) {
+        console.error('Model failed to load:', err);
+      }
+    }
+
+    fileInput.onchange = e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      preview.src = URL.createObjectURL(file);
+      resultDiv.innerHTML = '';
+    };
+
+    document.getElementById('analyzeBtn').onclick = async () => {
+      const file = fileInput.files[0];
+      if (!file) { alert('Please take or select a photo first.'); return; }
+      if (!modelLoaded) await loadModel();
+
+      resultDiv.innerHTML = '<p>Analyzing... please wait ⏳</p>';
+
+      // Simulate AI inference
+      setTimeout(() => {
+        // Random simulated results
+        const pests = ["Aphids", "Whiteflies", "Cutworms", "Healthy"];
+        const soil = ["Moist and fertile", "Dry with low organic matter", "Waterlogged", "Healthy texture"];
+        const pest = pests[Math.floor(Math.random() * pests.length)];
+        const soilStatus = soil[Math.floor(Math.random() * soil.length)];
+        const confidence = (Math.random() * 30 + 70).toFixed(2);
+
+        resultDiv.innerHTML = `
+          <h4>📋 Analysis Result</h4>
+          <p><b>Pest/Disease:</b> ${pest}</p>
+          <p><b>Soil Health:</b> ${soilStatus}</p>
+          <p><b>Confidence:</b> ${confidence}%</p>
+          <p><b>Recommendation:</b> ${
+            pest === "Healthy"
+              ? "Your crop looks good! Keep monitoring soil moisture."
+              : "Consider applying eco-friendly pest control and mulching to retain soil health."
+          }</p>
+        `;
+      }, 2000);
+    };
+
+    // Load placeholder model on start
+    loadModel();
+  </script>
+</body>
+</html>
