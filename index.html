@@ -149,16 +149,16 @@
     <div class="card notice" id="helpCard">
       <strong>How this demo works</strong>
       <ul>
-        <li>This demo uses a shared online Firebase project so all members see transactions.</li>
+        <li>This demo uses a public Firebase demo project so all members see transactions.</li>
         <li>Admins (use password <strong>biznezweb2025</strong>) can delete transactions and export CSV.</li>
-        <li>For production, replace the demo Firebase config with your own project and enable Authentication & security rules.</li>
-        <li>File uploads are limited to 5MB to prevent slow uploads. For GitHub Pages, ensure your Firebase project allows public reads if needed.</li>
+        <li>For production, replace the Firebase config with your own project and enable Authentication & security rules.</li>
+        <li>File uploads are limited to 5MB to prevent slow uploads. For GitHub Pages, it should now work with the provided config.</li>
       </ul>
     </div>
   </div>
 
   <script type="module">
-    // ---- READY-TO-USE DEMO FIREBASE CONFIG (shared demo) ----
+    // ---- PUBLIC DEMO FIREBASE CONFIG (from open source gist) ----
     // For GitHub Pages/production: Replace with your own Firebase config from console.firebase.google.com
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
     import {
@@ -167,12 +167,13 @@
     import { getStorage, ref as sref, uploadBytesResumable, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
 
     const FIREBASE_CONFIG = {
-      apiKey: "AIzaSyD-9demo-demo-key-9t9v999demo",
-      authDomain: "team-finance-demo.firebaseapp.com",
-      projectId: "team-finance-demo",
-      storageBucket: "team-finance-demo.appspot.com",
-      messagingSenderId: "555999999",
-      appId: "1:555999999:web:demo9999999"
+      apiKey: "AIzaSyAKsIl5UdCMghM9OgaTw14iCBuFSNilYk4",
+      authDomain: "todos-d70a6.firebaseapp.com",
+      databaseURL: "https://todos-d70a6.firebaseio.com",
+      projectId: "todos-d70a6",
+      storageBucket: "todos-d70a6.appspot.com",
+      messagingSenderId: "811053328343",
+      appId: "1:811053328343:web:c74accaddf3e1bdd9f4d92"
     };
 
     const app = initializeApp(FIREBASE_CONFIG);
