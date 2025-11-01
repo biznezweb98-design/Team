@@ -22,6 +22,54 @@ th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
 </head>
 <body>
 
+<!--
+  FIREBASE SECURITY RULES (Copy-Paste into Firebase Console)
+  
+  Firestore Rules (Go to Firestore Database > Rules):
+  rules_version = '2';
+  service cloud.firestore {
+    match /databases/{database}/documents {
+      match /transactions/{transactionId} {
+        allow read: if request.auth != null;
+        allow create: if request.auth != null
+                     && request.resource.data.amount is number
+                     && request.resource.data.amount > 0
+                     && request.resource.data.type in ['income', 'expense']
+                     && request.resource.data.userName is string
+                     && request.resource.data.description is string
+                     && (request.resource.data.receiptUrl == null || request.resource.data.receiptUrl is string);
+        allow update: if request.auth != null
+                      && resource.data.amount is number
+                      && resource.data.amount > 0
+                      && resource.data.type in ['income', 'expense']
+                      && resource.data.userName is string
+                      && resource.data.description is string
+                      && (resource.data.receiptUrl == null || resource.data.receiptUrl is string)
+                      && (resource.data.userName == request.auth.uid || true);
+        allow delete: if request.auth != null;
+      }
+    }
+  }
+  
+  Storage Rules (Go to Storage > Rules):
+  rules_version = '2';
+  service firebase.storage {
+    match /b/{bucket}/o {
+      match /receipts/{allPaths=**} {
+        allow read: if request.auth != null;
+        allow list: if request.auth != null;
+        allow write: if request.auth != null
+                     && request.resource.size < 5 * 1024 * 1024
+                     && (request.resource.contentType.matches('image/.*') ||
+                         request.resource.contentType == 'application/pdf');
+      }
+      match /{allPaths=**} {
+        allow read, write: if false;
+      }
+    }
+  }
+-->
+
 <div class="card" id="authCard">
 <h2>Sign In</h2>
 <label>Your name</label><br>
@@ -134,11 +182,12 @@ const MAX_FILE_SIZE = 5*1024*1024;
 let allTx = [];
 
 // Initialize Firebase
-let app, db, storage;
+let app, db, storage, auth;
 try {
   app = firebase.initializeApp(FIREBASE_CONFIG);
   db = firebase.firestore();
   storage = firebase.storage();
+  auth = firebase.auth();
 } catch (error) {
   console.error("Firebase initialization error:", error);
 }
@@ -148,14 +197,21 @@ roleSelect.addEventListener('change',()=>{
   adminPwdWrap.classList.toggle('hidden', roleSelect.value!=='admin');
 });
 
-signBtn.addEventListener('click',()=>{
+signBtn.addEventListener('click',async ()=>{
   const name=nameInput.value.trim();
   const role=roleSelect.value;
   if(!name){alert('Enter name'); return;}
   if(role==='admin' && adminPwd.value!==ADMIN_PASSWORD){alert('Wrong password'); return;}
   currentUser={name,role,isAdmin:role==='admin'};
   localStorage.setItem('team_user',JSON.stringify(currentUser));
-  enterApp();
+  
+  try {
+    await auth.signInAnonymously();
+    enterApp();
+  } catch (error) {
+    console.error("Anonymous sign-in failed:", error);
+    alert('Sign-in failed: ' + error.message);
+  }
 });
 
 addTxBtn.addEventListener('click',async ()=>{
@@ -224,7 +280,7 @@ exportCsvBtn.addEventListener('click',()=>{
 });
 
 // Functions
-function enterApp(){
+async function enterApp(){
   authCard.classList.add('hidden');
   appCard.classList.remove('hidden');
   userNameDisp.textContent=currentUser.name;
@@ -253,7 +309,7 @@ function renderTransactions(){
     const tr=document.createElement('tr');
     const dateText = tx.date?.seconds ? new Date(tx.date.seconds*1000).toLocaleString() : '—';
     const receiptLink = tx.receiptUrl ? 
-      `<a class="receipt-link" href="${tx.receiptUrl}" target="_blank">Download</a>` : '—';
+      `<a class="receipt-link" href="${tx.receiptUrl}" target="_blank" download>Download</a>` : '—';
     
     const actionCell = currentUser.isAdmin ? 
       `<button class="ghost" data-id="${tx.id}">Delete</button>` : '';
@@ -325,20 +381,25 @@ async function uploadFile(file) {
 }
 
 // Initialize app
-const stored = localStorage.getItem('team_user');
-if(stored){
-  try {
-    currentUser=JSON.parse(stored); 
-    enterApp();
-  } catch (error) {
-    console.error("Error loading stored user:", error);
+async function initApp() {
+  const stored = localStorage.getItem('team_user');
+  if(stored){
+    try {
+      currentUser=JSON.parse(stored); 
+      await auth.signInAnonymously();
+      enterApp();
+    } catch (error) {
+      console.error("Error loading stored user or signing in:", error);
+    }
   }
 }
+initApp();
 </script>
 
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 </body>
 </html>
