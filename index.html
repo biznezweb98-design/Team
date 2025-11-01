@@ -94,7 +94,7 @@
             <input id="description" placeholder="e.g. sold produce" />
           </div>
           <div style="min-width:200px">
-            <label class="small">Receipt (jpg/png/pdf)</label><br />
+            <label class="small">Receipt (jpg/png/pdf, max 5MB)</label><br />
             <input id="receipt" type="file" accept="image/*,.pdf" />
           </div>
         </div>
@@ -152,12 +152,14 @@
         <li>This demo uses a shared online Firebase project so all members see transactions.</li>
         <li>Admins (use password <strong>biznezweb2025</strong>) can delete transactions and export CSV.</li>
         <li>For production, replace the demo Firebase config with your own project and enable Authentication & security rules.</li>
+        <li>File uploads are limited to 5MB to prevent slow uploads. For GitHub Pages, ensure your Firebase project allows public reads if needed.</li>
       </ul>
     </div>
   </div>
 
   <script type="module">
     // ---- READY-TO-USE DEMO FIREBASE CONFIG (shared demo) ----
+    // For GitHub Pages/production: Replace with your own Firebase config from console.firebase.google.com
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
     import {
       getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, deleteDoc
@@ -215,6 +217,7 @@
 
     let currentUser = { name: null, role: 'member', isAdmin: false };
     const ADMIN_PASSWORD = 'biznezweb2025';
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
     // Simple role UI
     roleSelect.addEventListener('change', () => {
@@ -356,6 +359,11 @@
       if (!amt || isNaN(amt)) return alert('Enter valid amount');
       if (!currentUser.name) return alert('No user name found');
 
+      const f = receiptInput.files && receiptInput.files[0];
+      if (f && f.size > MAX_FILE_SIZE) {
+        return alert('File too large. Maximum size is 5MB. Please choose a smaller file.');
+      }
+
       const tx = {
         amount: amt,
         type: typeInput.value,
@@ -368,14 +376,15 @@
       tx.date = serverTimestamp();
 
       try {
-        const f = receiptInput.files && receiptInput.files[0];
+        let receiptUrl = null;
         if (f) {
-          const url = await uploadReceipt(f);
-          tx.receiptUrl = url;
+          receiptUrl = await uploadReceipt(f);
+          tx.receiptUrl = receiptUrl;
         }
         await addDoc(collection(db, 'transactions'), tx);
         // clear
         amountInput.value = ''; descInput.value = ''; receiptInput.value = '';
+        alert('Transaction added successfully!');
       } catch (err) {
         console.error('Add error', err);
         alert('Failed to add transaction: ' + err.message);
@@ -388,9 +397,13 @@
       return h;
     }
 
-    // Upload receipt to Storage
+    // Upload receipt to Storage with size check and improved error handling
     function uploadReceipt(file){
       return new Promise((resolve,reject)=> {
+        if (file.size > MAX_FILE_SIZE) {
+          reject(new Error('File exceeds maximum size of 5MB'));
+          return;
+        }
         const path = 'receipts/' + Date.now() + '_' + file.name.replace(/\s+/g,'_');
         const r = sref(storage, path);
         const task = uploadBytesResumable(r, file);
@@ -404,9 +417,14 @@
           console.error('Upload err', err);
           reject(err);
         }, async () => {
-          const url = await getDownloadURL(task.snapshot.ref);
-          uploadProgressWrap.classList.add('hidden');
-          resolve(url);
+          try {
+            const url = await getDownloadURL(task.snapshot.ref);
+            uploadProgressWrap.classList.add('hidden');
+            resolve(url);
+          } catch (err) {
+            uploadProgressWrap.classList.add('hidden');
+            reject(err);
+          }
         });
       });
     }
@@ -438,20 +456,22 @@
       const a = document.createElement('a'); a.href = url; a.download = 'transactions.csv'; a.click(); a.remove(); URL.revokeObjectURL(url);
     });
 
+    // Clear form
+    clearBtn.addEventListener('click', () => {
+      amountInput.value = '';
+      typeInput.value = 'expense';
+      descInput.value = '';
+      receiptInput.value = '';
+      uploadProgressWrap.classList.add('hidden');
+    });
+
     // Filters
     applyFilter.addEventListener('click', renderTransactions);
     resetFilter.addEventListener('click', () => { filterUser.value='all'; fromDate.value=''; toDate.value=''; searchInput.value=''; renderTransactions(); });
     refreshBtn.addEventListener('click', ()=> renderTransactions());
 
-    // Utility: small doc and deleteDoc references
-    import { doc as docRef } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
-    // we need doc and deleteDoc above, but redeclare doc for usage in deleteTx
-    async function deleteDocWrapper(documentRef) {
-      return deleteDoc(documentRef);
-    }
-    // fix: ensure deleteDoc and doc are available
-    // (deleteDoc and doc were imported earlier; use them directly)
-    // For compatibility in older browsers, ensure currentUser name present
+    // Initial render if already signed in
+    if (currentUser.name) renderTransactions();
   </script>
 </body>
 </html>
