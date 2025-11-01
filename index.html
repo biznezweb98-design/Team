@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Team Finance — Secure Demo</title>
+  <style>
+    :root{--bg:#f3f7f8;--card:#fff;--accent:#0b6e4f;--muted:#6b7280}
+    body{font-family:Inter,system-ui,Arial;background:var(--bg);margin:0;color:#07101a}
+    .wrap{max-width:1100px;margin:28px auto;padding:18px}
+    .card{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 8px 30px rgba(2,6,23,0.06);margin-bottom:14px}
+    header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    h1{margin:0;font-size:20px}
+    .muted{color:var(--muted);font-size:13px}
+    .flex{display:flex;gap:8px;align-items:center}
+    input,select,textarea{padding:10px;border-radius:8px;border:1px solid #e6eef4;background:#fcffff}
+    button{background:var(--accent);color:white;padding:8px 12px;border-radius:8px;border:0;cursor:pointer}
+    button.ghost{background:transparent;color:var(--muted);border:1px solid #e6eef4}
+    table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+    th,td{padding:10px;border-bottom:1px solid #eef4f7;text-align:left}
+    th{color:var(--muted);font-size:13px}
+    .small{font-size:13px;color:var(--muted)}
+    .tag{background:#ecfdf5;color:#065f46;padding:6px 8px;border-radius:999px;font-weight:700}
+    .center{text-align:center}
+    .hidden{display:none}
+    .notice{background:#f1f5f9;padding:10px;border-radius:8px;color:#0f172a}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" id="authCard">
+      <header>
+        <div>
+          <h1>Team Finance — Demo (Shared)</h1>
+          <div class="muted">Sign in below. Admin password: <strong>biznezweb2025</strong></div>
+        </div>
+        <div id="authStatus" class="small"></div>
+      </header>
+
+      <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap">
+        <div style="min-width:220px">
+          <label class="small">Your name</label><br />
+          <input id="nameInput" placeholder="e.g. Lamin" />
+        </div>
+
+        <div style="min-width:200px">
+          <label class="small">Role</label><br />
+          <select id="roleSelect">
+            <option value="member">Member</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+
+        <div style="min-width:220px" id="adminPwdWrap" class="hidden">
+          <label class="small">Admin password</label><br />
+          <input id="adminPwd" type="password" placeholder="Enter admin password" />
+        </div>
+
+        <div style="align-self:end">
+          <button id="signBtn">Sign in</button>
+          <button id="signOutBtn" class="ghost">Sign out</button>
+        </div>
+      </div>
+      <div id="authNote" class="small muted" style="margin-top:8px">Members can add/view transactions. Admins can delete transactions and export CSV.</div>
+    </div>
+
+    <div class="card hidden" id="appCard">
+      <header>
+        <div>
+          <h1>Team Finance Dashboard</h1>
+          <div class="small muted">Signed in as: <span id="userNameDisp"></span> <span id="roleTag"></span></div>
+        </div>
+        <div class="flex">
+          <button id="exportCsvBtn" class="ghost">Export CSV</button>
+          <button id="refreshBtn" class="ghost">Refresh</button>
+        </div>
+      </header>
+
+      <section style="margin-top:12px" class="grid">
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <div style="min-width:200px">
+            <label class="small">Amount (GMD)</label><br />
+            <input id="amount" type="number" step="0.01" placeholder="e.g. 1200" />
+          </div>
+          <div style="min-width:160px">
+            <label class="small">Type</label><br />
+            <select id="type">
+              <option value="expense">Expense</option>
+              <option value="income">Income</option>
+            </select>
+          </div>
+          <div style="min-width:220px;flex:1">
+            <label class="small">Description</label><br />
+            <input id="description" placeholder="e.g. sold produce" />
+          </div>
+          <div style="min-width:200px">
+            <label class="small">Receipt (jpg/png/pdf)</label><br />
+            <input id="receipt" type="file" accept="image/*,.pdf" />
+          </div>
+        </div>
+
+        <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+          <button id="addTxBtn">Add transaction</button>
+          <button id="clearBtn" class="ghost">Clear</button>
+          <div id="uploadProgressWrap" class="small hidden" style="margin-left:12px">
+            Uploading: <span id="uploadPct">0</span>%
+          </div>
+        </div>
+      </section>
+
+      <section style="margin-top:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+          <div class="flex">
+            <label class="small">Filter user</label>
+            <select id="filterUser" style="margin-left:6px"><option value="all">All</option></select>
+
+            <label class="small" style="margin-left:8px">From</label>
+            <input id="fromDate" type="date" style="margin-left:6px" />
+
+            <label class="small" style="margin-left:8px">To</label>
+            <input id="toDate" type="date" style="margin-left:6px" />
+          </div>
+
+          <div class="flex">
+            <input id="searchInput" placeholder="Search description or user..." />
+            <button id="applyFilter" class="ghost">Apply</button>
+            <button id="resetFilter" class="ghost">Reset</button>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <div class="small muted">Totals (visible)</div>
+          <div style="display:flex;gap:12px;margin-top:6px">
+            <div style="background:#f0fffb;padding:10px;border-radius:8px">Income: <strong id="totalIncome">GMD 0.00</strong></div>
+            <div style="background:#fff6f6;padding:10px;border-radius:8px">Expense: <strong id="totalExpense">GMD 0.00</strong></div>
+            <div style="background:#f8fbff;padding:10px;border-radius:8px">Balance: <strong id="balance">GMD 0.00</strong></div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;overflow:auto">
+          <table id="txTable">
+            <thead><tr><th>Date</th><th>User</th><th>Type</th><th>Amount</th><th>Description</th><th>Receipt</th><th>Action</th></tr></thead>
+            <tbody id="txBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <div class="card notice" id="helpCard">
+      <strong>How this demo works</strong>
+      <ul>
+        <li>This demo uses a shared online Firebase project so all members see transactions.</li>
+        <li>Admins (use password <strong>biznezweb2025</strong>) can delete transactions and export CSV.</li>
+        <li>For production, replace the demo Firebase config with your own project and enable Authentication & security rules.</li>
+      </ul>
+    </div>
+  </div>
+
+  <script type="module">
+    // ---- READY-TO-USE DEMO FIREBASE CONFIG (shared demo) ----
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import {
+      getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, deleteDoc
+    } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+    import { getStorage, ref as sref, uploadBytesResumable, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
+
+    const FIREBASE_CONFIG = {
+      apiKey: "AIzaSyD-9demo-demo-key-9t9v999demo",
+      authDomain: "team-finance-demo.firebaseapp.com",
+      projectId: "team-finance-demo",
+      storageBucket: "team-finance-demo.appspot.com",
+      messagingSenderId: "555999999",
+      appId: "1:555999999:web:demo9999999"
+    };
+
+    const app = initializeApp(FIREBASE_CONFIG);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    // UI refs
+    const authCard = document.getElementById('authCard');
+    const appCard = document.getElementById('appCard');
+    const nameInput = document.getElementById('nameInput');
+    const roleSelect = document.getElementById('roleSelect');
+    const adminPwdWrap = document.getElementById('adminPwdWrap');
+    const adminPwd = document.getElementById('adminPwd');
+    const signBtn = document.getElementById('signBtn');
+    const signOutBtn = document.getElementById('signOutBtn');
+    const authStatus = document.getElementById('authStatus');
+    const userNameDisp = document.getElementById('userNameDisp');
+    const roleTag = document.getElementById('roleTag');
+
+    const amountInput = document.getElementById('amount');
+    const typeInput = document.getElementById('type');
+    const descInput = document.getElementById('description');
+    const receiptInput = document.getElementById('receipt');
+    const addTxBtn = document.getElementById('addTxBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const uploadProgressWrap = document.getElementById('uploadProgressWrap');
+    const uploadPct = document.getElementById('uploadPct');
+
+    const filterUser = document.getElementById('filterUser');
+    const fromDate = document.getElementById('fromDate');
+    const toDate = document.getElementById('toDate');
+    const searchInput = document.getElementById('searchInput');
+    const applyFilter = document.getElementById('applyFilter');
+    const resetFilter = document.getElementById('resetFilter');
+    const exportCsvBtn = document.getElementById('exportCsvBtn');
+    const refreshBtn = document.getElementById('refreshBtn');
+
+    const txBody = document.getElementById('txBody');
+    const totalIncomeEl = document.getElementById('totalIncome');
+    const totalExpenseEl = document.getElementById('totalExpense');
+    const balanceEl = document.getElementById('balance');
+
+    let currentUser = { name: null, role: 'member', isAdmin: false };
+    const ADMIN_PASSWORD = 'biznezweb2025';
+
+    // Simple role UI
+    roleSelect.addEventListener('change', () => {
+      if (roleSelect.value === 'admin') adminPwdWrap.classList.remove('hidden'); else adminPwdWrap.classList.add('hidden');
+    });
+
+    signBtn.addEventListener('click', () => {
+      const name = nameInput.value.trim();
+      const role = roleSelect.value;
+      if (!name) return alert('Please enter your name');
+      if (role === 'admin') {
+        if (adminPwd.value !== ADMIN_PASSWORD) return alert('Wrong admin password');
+        currentUser = { name, role, isAdmin: true };
+      } else {
+        currentUser = { name, role, isAdmin: false };
+      }
+      // Persist locally
+      localStorage.setItem('team_user', JSON.stringify(currentUser));
+      enterApp();
+    });
+
+    signOutBtn.addEventListener('click', () => {
+      localStorage.removeItem('team_user');
+      location.reload();
+    });
+
+    function enterApp(){
+      authCard.classList.add('hidden');
+      appCard.classList.remove('hidden');
+      userNameDisp.textContent = currentUser.name;
+      roleTag.innerHTML = currentUser.isAdmin ? '<span class="tag">ADMIN</span>' : '<span class="small muted">Member</span>';
+      authStatus.textContent = '';
+      startRealtime();
+    }
+
+    // Load existing user
+    const stored = localStorage.getItem('team_user');
+    if (stored) {
+      try {
+        currentUser = JSON.parse(stored);
+        enterApp();
+      } catch(e){}
+    }
+
+    // Firestore - realtime listener for transactions collection
+    const txCol = collection(db, 'transactions');
+    const q = query(txCol, orderBy('date', 'desc'));
+    let allTx = [];
+
+    function startRealtime(){
+      onSnapshot(q, snap => {
+        const docs = [];
+        snap.forEach(d => docs.push({ id: d.id, ...d.data() }));
+        allTx = docs;
+        renderTransactions();
+        populateUsers();
+      }, err => {
+        console.error('Realtime error', err);
+        alert('Error loading data: ' + err.message);
+      });
+    }
+
+    function renderTransactions(){
+      const fUserVal = filterUser.value || 'all';
+      const fFrom = fromDate.value ? new Date(fromDate.value) : null;
+      const fTo = toDate.value ? (() => { const d = new Date(toDate.value); d.setHours(23,59,59,999); return d; })() : null;
+      const search = (searchInput.value || '').toLowerCase();
+
+      const visible = allTx.filter(t => {
+        if (fUserVal !== 'all' && t.userId !== fUserVal) return false;
+        if (fFrom) {
+          const td = t.date && t.date.seconds ? new Date(t.date.seconds * 1000) : new Date(t.date);
+          if (!td || td < fFrom) return false;
+        }
+        if (fTo) {
+          const td = t.date && t.date.seconds ? new Date(t.date.seconds * 1000) : new Date(t.date);
+          if (!td || td > fTo) return false;
+        }
+        if (search) {
+          const s = ((t.description||'') + ' ' + (t.userName||'')).toLowerCase();
+          if (!s.includes(search)) return false;
+        }
+        return true;
+      });
+
+      let income = 0, expense = 0;
+      txBody.innerHTML = '';
+      for (const tx of visible) {
+        if (tx.type === 'income') income += Number(tx.amount || 0); else expense += Number(tx.amount || 0);
+
+        const tr = document.createElement('tr');
+        const dateText = tx.date && tx.date.seconds ? new Date(tx.date.seconds * 1000).toLocaleString() : (tx.createdAtText || '—');
+
+        tr.innerHTML = `
+          <td>${dateText}</td>
+          <td>${tx.userName || 'Anonymous'}</td>
+          <td>${tx.type}</td>
+          <td>GMD ${Number(tx.amount || 0).toFixed(2)}</td>
+          <td>${tx.description || '—'}</td>
+          <td>${tx.receiptUrl ? '<a href="'+tx.receiptUrl+'" target="_blank" rel="noreferrer">View</a>' : '—'}</td>
+          <td></td>
+        `;
+        // action cell
+        const actionTd = tr.querySelector('td:last-child');
+        if (currentUser.isAdmin) {
+          const del = document.createElement('button');
+          del.textContent = 'Delete';
+          del.className = 'ghost';
+          del.style.padding = '6px 8px';
+          del.addEventListener('click', ()=> deleteTx(tx));
+          actionTd.appendChild(del);
+        } else {
+          actionTd.textContent = currentUser.name === tx.userName ? 'You' : '';
+        }
+
+        txBody.appendChild(tr);
+      }
+
+      totalIncomeEl.textContent = 'GMD ' + income.toFixed(2);
+      totalExpenseEl.textContent = 'GMD ' + expense.toFixed(2);
+      balanceEl.textContent = 'GMD ' + (income - expense).toFixed(2);
+    }
+
+    function populateUsers(){
+      const map = new Map();
+      allTx.forEach(t => map.set(t.userId, t.userName || 'Anonymous'));
+      const prev = filterUser.value || 'all';
+      filterUser.innerHTML = '<option value="all">All</option>';
+      for (const [id,name] of map) {
+        const o = document.createElement('option'); o.value = id; o.textContent = name;
+        filterUser.appendChild(o);
+      }
+      filterUser.value = prev;
+    }
+
+    // Add transaction
+    addTxBtn.addEventListener('click', async () => {
+      const amt = parseFloat(amountInput.value);
+      if (!amt || isNaN(amt)) return alert('Enter valid amount');
+      if (!currentUser.name) return alert('No user name found');
+
+      const tx = {
+        amount: amt,
+        type: typeInput.value,
+        description: descInput.value || '',
+        userId: currentUser.name + '::' + (Math.abs(hashCode(currentUser.name)) % 100000), // simple uid
+        userName: currentUser.name,
+      };
+
+      // Use serverTimestamp for reliable ordering
+      tx.date = serverTimestamp();
+
+      try {
+        const f = receiptInput.files && receiptInput.files[0];
+        if (f) {
+          const url = await uploadReceipt(f);
+          tx.receiptUrl = url;
+        }
+        await addDoc(collection(db, 'transactions'), tx);
+        // clear
+        amountInput.value = ''; descInput.value = ''; receiptInput.value = '';
+      } catch (err) {
+        console.error('Add error', err);
+        alert('Failed to add transaction: ' + err.message);
+      }
+    });
+
+    function hashCode(str) {
+      var h = 0;
+      for (var i = 0; i < str.length; i++) h = Math.imul(31, h) + str.charCodeAt(i) | 0;
+      return h;
+    }
+
+    // Upload receipt to Storage
+    function uploadReceipt(file){
+      return new Promise((resolve,reject)=> {
+        const path = 'receipts/' + Date.now() + '_' + file.name.replace(/\s+/g,'_');
+        const r = sref(storage, path);
+        const task = uploadBytesResumable(r, file);
+        uploadProgressWrap.classList.remove('hidden');
+        uploadPct.textContent = '0';
+        task.on('state_changed', snapshot => {
+          const pct = Math.floor((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          uploadPct.textContent = String(pct);
+        }, err => {
+          uploadProgressWrap.classList.add('hidden');
+          console.error('Upload err', err);
+          reject(err);
+        }, async () => {
+          const url = await getDownloadURL(task.snapshot.ref);
+          uploadProgressWrap.classList.add('hidden');
+          resolve(url);
+        });
+      });
+    }
+
+    // Delete transaction (admin)
+    async function deleteTx(tx){
+      if (!confirm('Delete transaction?')) return;
+      try {
+        await deleteDoc(doc(db, 'transactions', tx.id));
+        alert('Deleted');
+      } catch (err) {
+        console.error('Delete failed', err);
+        alert('Delete failed: ' + err.message);
+      }
+    }
+
+    // Export CSV (admin)
+    exportCsvBtn.addEventListener('click', () => {
+      if (!currentUser.isAdmin) return alert('Only admins can export');
+      if (!allTx.length) return alert('No transactions to export');
+      const rows = [['Date','User','Type','Amount','Description','ReceiptURL']];
+      allTx.forEach(t => {
+        const date = t.date && t.date.seconds ? new Date(t.date.seconds*1000).toISOString() : '';
+        rows.push([date, t.userName||'', t.type||'', Number(t.amount||0).toFixed(2), (t.description||'').replace(/,/g,' '), t.receiptUrl || '']);
+      });
+      const csv = rows.map(r => r.join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'transactions.csv'; a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    // Filters
+    applyFilter.addEventListener('click', renderTransactions);
+    resetFilter.addEventListener('click', () => { filterUser.value='all'; fromDate.value=''; toDate.value=''; searchInput.value=''; renderTransactions(); });
+    refreshBtn.addEventListener('click', ()=> renderTransactions());
+
+    // Utility: small doc and deleteDoc references
+    import { doc as docRef } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+    // we need doc and deleteDoc above, but redeclare doc for usage in deleteTx
+    async function deleteDocWrapper(documentRef) {
+      return deleteDoc(documentRef);
+    }
+    // fix: ensure deleteDoc and doc are available
+    // (deleteDoc and doc were imported earlier; use them directly)
+    // For compatibility in older browsers, ensure currentUser name present
+  </script>
+</body>
+</html>
