@@ -191,13 +191,63 @@ function getUniqueName(gender){
 
 // Regions and districts (kept from your earlier dataset)
 const regions = [
-  { name: 'Banjul', districts: ['Banjul Ward A','Banjul Ward B'] },
-  { name: 'Kanifing Municipality', districts: ['Serekunda East','Serekunda West','Brikama Road','Tallinding Kunjang','Latrikunda Sabiji'] },
-  { name: 'West Coast Region (Brikama)', districts: ['Kombo North','Kombo South','Kombo Central','Kombo East','Kombo Central II','Foni Bintang-Karenai','Foni Brefet','Foni Jarrol','Foni Kansala'] },
-  { name: 'North Bank Region (Kerewan)', districts: ['Lower Niumi','Upper Niumi','Jokadu','Lower Baddibu','Central Baddibu','Upper Baddibu'] },
-  { name: 'Lower River Region (Mansa Konko)', districts: ['Kiang West','Kiang Central','Kiang East','Jarra West','Jarra Central','Jarra East'] },
-  { name: 'Central River Region (Janjanbureh)', districts: ['Janjanbureh','Niani','Nianija','Sami','Fulladu West','Niamina East','Niamina West','Niamina Dankunku','Lower Saloum','Upper Saloum'] },
-  { name: 'Upper River Region (Basse)', districts: ['Fulladu East','Kantora','Sandu','Tumana','Wuli West','Wuli East','Jimara'] }
+  { name: 'Banjul', districts: [
+      { district: 'Banjul Central', villages: ['Banjul Market Area', 'Half-Die', 'Campama'] },
+      { district: 'Banjul North', villages: ['New Town', 'Soldier Town', 'Tobacco Road'] },
+      { district: 'Banjul South', villages: ['Hagan Street Area', 'Buckle Street', 'Perseverance Street'] }
+    ] },
+  { name: 'Kanifing Municipality', districts: [
+      { district: 'Kanifing District', villages: ['Serekunda', 'Bakau', 'Fajara'] }
+    ] },
+  { name: 'West Coast Region (Brikama)', districts: [
+      { district: 'Kombo South', villages: ['Sanyang', 'Tanji', 'Gunjur'] },
+      { district: 'Kombo Central', villages: ['Brikama', 'Kassa Kunda', 'Marakissa'] },
+      { district: 'Kombo East', villages: ['Kuloro', 'Mandinaba', 'Faraba Banta'] },
+      { district: 'Kombo North / St. Mary', villages: ['Sukuta', 'Bakoteh', 'Kololi'] },
+      { district: 'Foni Bintang-Karenai', villages: ['Bintang', 'Kanfenda', 'Bondali'] },
+      { district: 'Foni Bondali', villages: ['Bondali Tenda', 'Besse', 'Bulock'] },
+      { district: 'Foni Brefet', villages: ['Brefet', 'Sibanor', 'Kafuta'] },
+      { district: 'Foni Jarrol', villages: ['Jarrol', 'Kanfenda Kunda', 'Somita'] },
+      { district: 'Foni Kansala', villages: ['Bwiam', 'Kampant', 'Foni Bwaim'] }
+    ] },
+  { name: 'North Bank Region (Kerewan)', districts: [
+      { district: 'Lower Niumi', villages: ['Barra', 'Essau', 'Albreda'] },
+      { district: 'Upper Niumi', villages: ['Kerr Devili', 'Sika', 'Bakindik'] },
+      { district: 'Jokadu', villages: ['Medina Sambujang', 'Bakang Fula Kunda', 'Bakang Wollof'] },
+      { district: 'Lower Baddibu', villages: ['Illiassa', 'Salikene', 'Kerewan'] },
+      { district: 'Central Baddibu', villages: ['Farafenni', 'Dumbutu', 'Njaba Kunda'] },
+      { district: 'Sabach Sanjal', villages: ['Sara Kunda', 'Njawara', 'Sanjal'] },
+      { district: 'Illiassa (Upper Baddibu)', villages: ['Njawara', 'Salikenni', 'Illiasa'] }
+    ] },
+  { name: 'Lower River Region (Mansa Konko)', districts: [
+      { district: 'Jarra East', villages: ['Bureng', 'Dasilameh', 'Dongoroba'] },
+      { district: 'Jarra Central', villages: ['Soma', 'Pakaliba', 'Mansakonko'] },
+      { district: 'Jarra West', villages: ['Karantaba Jarra', 'Fonkoi Kunda', 'Sare Saidy'] },
+      { district: 'Kiang East', villages: ['Kaiaf', 'Kwinella', 'Jattaba'] },
+      { district: 'Kiang Central', villages: ['Dumbuto', 'Jifarong', 'Manduar'] },
+      { district: 'Kiang West', villages: ['Tendaba', 'Tankular', 'Sankwia'] }
+    ] },
+  { name: 'Central River Region (Janjanbureh)', districts: [
+      { district: 'Niamina East', villages: ['Sapu', 'Kudang', 'Missira'] },
+      { district: 'Niamina West', villages: ['Jarreng', 'Kuli Kunda', 'Dankunku'] },
+      { district: 'Niamina Dankunku', villages: ['Dankunku Village', 'Sare Bambo', 'Jimbala Kunda'] },
+      { district: 'Janjanbureh (Island)', villages: ['Janjanbureh Town', 'Georgetown Camp', 'Lamin Koto'] },
+      { district: 'Fulladu West', villages: ['Bansang', 'Kunting', 'Tuba Dampu'] },
+      { district: 'Lower Saloum', villages: ['Kaur', 'Karantaba', 'Simbara'] },
+      { district: 'Upper Saloum', villages: ['Kudang Tenda', 'Kaur Wollof', 'Njau'] },
+      { district: 'Niani', villages: ['Kuntaur Fulla Kunda', 'Karantaba Niani', 'Wassu'] },
+      { district: 'Nianija', villages: ['Panchang', 'Sinchu Baya', 'Dankunku Fula Kunda'] },
+      { district: 'Sami', villages: ['Kerr Ardo', 'Chamen Jalal Kunda', 'Njaw'] }
+    ] },
+  { name: 'Upper River Region (Basse)', districts: [
+      { district: 'Wuli East', villages: ['Bantunding', 'Boro Kanda Kasseh', 'Wellingara Yare'] },
+      { district: 'Wuli West', villages: ['Sare Ngai', 'Sare Gayo', 'Barrow Kunda'] },
+      { district: 'Jimara', villages: ['Kaiaf', 'Koina', 'Sare Alpha'] },
+      { district: 'Kantora', villages: ['Garawol', 'Nema', 'Sare Jor'] },
+      { district: 'Sandu', villages: ['Diabugu Batapa', 'Sare Sillay', 'Jula Kunda'] },
+      { district: 'Tumana', villages: ['Sutukoba', 'Kundam Demba', 'Barajally Tenda'] },
+      { district: 'Fulladu East', villages: ['Basse Santa Su', 'Manneh Kunda', 'Demba Kunda'] }
+    ] }
 ];
 
 // id generator for dummy TIN and ID numbers
@@ -211,8 +261,17 @@ function genID(prefix){
 const fullData = regions.map(region => {
   return {
     region: region.name,
-    districts: region.districts.map(districtName => {
-      const branches = ['Dongoroba branch','Bureng branch','Dasilameh branch'].map((bName, bIdx) => {
+    districts: region.districts.map(dItem => {
+      // dItem may be a string or an object { district, villages }
+      const districtName = (typeof dItem === 'string') ? dItem : dItem.district;
+      let branchNames = null;
+      if (typeof dItem === 'object' && Array.isArray(dItem.villages) && dItem.villages.length > 0) {
+        // use up to first 3 village names as Agric Extension Offices for that district
+        branchNames = dItem.villages.slice(0,3).map(v => v);
+      } else {
+        branchNames = ['Branch 1','Branch 2','Branch 3'];
+      }
+      const branches = branchNames.map((bName, bIdx) => {
         const workers = Array.from({length:6}, (_, tIndex) => {
           const gender = tIndex < 3 ? 'Male' : 'Female';
           const name = getUniqueName(gender);
@@ -242,7 +301,6 @@ const fullData = regions.map(region => {
     })
   };
 });
-
 // UI references
 const regionListEl = document.getElementById('regionList');
 const contentArea = document.getElementById('contentArea');
