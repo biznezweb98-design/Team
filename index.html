@@ -37,12 +37,15 @@ header .logo {
 .section { padding: 80px 20px; max-width: 1200px; margin: auto; text-align: center; }
 .section-title { font-size: 36px; margin-bottom: 50px; color: #222; }
 
-/* Mission / Vision / Future */
-.company-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; text-align: left; margin-top: 40px; }
-.company-info div { background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 6px 18px rgba(0,0,0,0.1); transition: transform .3s; }
-.company-info div:hover { transform: translateY(-8px); }
-.company-info h3 { color: #ff7f50; font-size: 24px; margin-bottom: 15px; }
-.company-info p { color: #555; font-size: 16px; line-height: 1.5; }
+/* Mission / Vision / Future Sections */
+.mission-section { background: #FFFAE5; color: #333; }
+.mission-section p { font-size: 18px; max-width: 900px; margin: 20px auto; line-height: 1.7; }
+
+.vision-section { background: #E5F9FF; color: #222; }
+.vision-section p { font-size: 18px; max-width: 900px; margin: 20px auto; line-height: 1.7; }
+
+.future-section { background: #F5E5FF; color: #222; }
+.future-section p { font-size: 18px; max-width: 900px; margin: 20px auto; line-height: 1.7; }
 
 /* Team Section */
 .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
@@ -79,23 +82,22 @@ header .logo {
   <p class="hero-subtitle">We build digital trust through powerful web systems</p>
 </header>
 
-<!-- Mission, Vision, Future Plans Section -->
-<section class="section">
-  <h2 class="section-title">Our Mission, Vision & Future</h2>
-  <div class="company-info">
-    <div>
-      <h3>Our Mission</h3>
-      <p>To empower businesses and individuals in The Gambia and beyond by creating trustworthy, secure, and efficient web systems that enhance digital presence and streamline operations.</p>
-    </div>
-    <div>
-      <h3>Our Vision</h3>
-      <p>To become the leading technology partner for organizations seeking innovative web solutions, fostering a digitally empowered ecosystem with reliability and transparency at its core.</p>
-    </div>
-    <div>
-      <h3>Future Plans</h3>
-      <p>Expand our portfolio of services to include AI-powered analytics, automated web systems, and training programs for local developers, ensuring sustainable growth and community impact through technology.</p>
-    </div>
-  </div>
+<!-- Mission Section -->
+<section class="section mission-section">
+  <h2 class="section-title">Our Mission</h2>
+  <p>To empower businesses and individuals in The Gambia and beyond by creating trustworthy, secure, and efficient web systems that enhance digital presence and streamline operations.</p>
+</section>
+
+<!-- Vision Section -->
+<section class="section vision-section">
+  <h2 class="section-title">Our Vision</h2>
+  <p>To become the leading technology partner for organizations seeking innovative web solutions, fostering a digitally empowered ecosystem with reliability and transparency at its core.</p>
+</section>
+
+<!-- Future Plans Section -->
+<section class="section future-section">
+  <h2 class="section-title">Future Plans</h2>
+  <p>Expand our portfolio of services to include AI-powered analytics, automated web systems, and training programs for local developers, ensuring sustainable growth and community impact through technology.</p>
 </section>
 
 <!-- Team Section -->
