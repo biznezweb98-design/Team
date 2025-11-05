@@ -1,39 +1,187 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>WebCred Solutions — Digital Trust & Data Systems</title>
-<meta name="description" content="WebCred Solutions: secure, grant-ready websites and data systems for startups, NGOs and government." />
-<style>
-  :root{
-    --bg1: #ffd166; /* gold */
-    --bg2: #c0c0c0; /* silver gray */
-    --bg3: #cfe9ff; /* diamond pale */
-    --bg4: #b8f1b0; /* light green */
-    --accent: #7c3aed;
-    --muted: #445566;
-    --card: rgba(255,255,255,0.85);
-    --glass: rgba(255,255,255,0.07);
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;background:linear-gradient(135deg,var(--bg1),var(--bg4),var(--bg2),var(--bg3));background-size:400% 400%;animation:bgAnim 18s ease infinite;color:#072635}
-  @keyframes bgAnim{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-  .wrap{max-width:1200px;margin:24px auto;padding:20px}
-  header{display:flex;align-items:center;justify-content:space-between;gap:16px;background:linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.5));backdrop-filter:blur(6px);padding:14px;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.12)}
-  .brand{display:flex;align-items:center;gap:14px}
-  .logo-wrap{width:72px;height:72px;border-radius:14px;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,0.08);cursor:pointer}
-  .logo{width:54px;height:54px;transform-origin:center;animation:spin 6s linear infinite}
-  @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-  h1{font-size:20px;margin:0}
-  header p{margin:0;color:var(--muted);font-size:13px}
-  nav{display:flex;gap:12px}
-  .btn{padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#e11d48);color:white;font-weight:700;border:none;cursor:pointer}
-  .ghost{padding:8px 12px;border-radius:10px;background:transparent;border:1px solid rgba(0,0,0,0.06);color:var(--muted);cursor:pointer}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WebCred Solutions — World Class Digital Craft</title>
 
-  /* Hero */
-  .hero{display:grid;grid-template-columns:1fr 420px;gap:20px;align-items:stretch;margin-top:18px}
+<style>
+/* Global Reset */
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif;}
+
+/* Animated Background */
+body{
+  background: linear-gradient(120deg,#0d0d0d,#2d2d2d,#111,#000);
+  background-size:400% 400%;
+  animation:bgMove 14s ease infinite;
+  color:#fff;
+}
+@keyframes bgMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* Container */
+.container{width:90%;max-width:1300px;margin:auto;}
+
+/* Rotating Logo */
+.logo{
+  width:70px;height:70px;
+  border-radius:50%;
+  background:linear-gradient(135deg,gold,white);
+  animation:spin 10s linear infinite;
+  position:absolute;top:25px;right:25px;
+}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+/* Hero */
+.hero{
+  padding:140px 0 120px;
+  text-align:center;
+}
+.hero h1{
+  font-size:60px;font-weight:700;
+  text-transform:uppercase;
+  color:gold;
+}
+.hero p{margin-top:15px;font-size:20px;color:#dcdcdc;}
+
+/* Section Titles */
+section h2{
+  text-align:center;margin:60px 0 20px;font-size:38px;
+  color:goldenrod;text-transform:uppercase;letter-spacing:2px;
+}
+
+/* Team */
+.team-grid{
+  display:flex;flex-wrap:wrap;gap:30px;justify-content:center;margin-top:40px;
+}
+.member{
+  width:260px;background:rgba(255,255,255,0.08);
+  padding:20px;border-radius:14px;text-align:center;
+  backdrop-filter:blur(8px);border:1px solid rgba(255,215,0,0.4);
+  transition:.4s;
+}
+.member:hover{transform:translateY(-10px);border-color:gold;}
+.member img{
+  width:100%;height:260px;object-fit:cover;border-radius:10px;
+}
+.member h3{margin-top:12px;color:#fff;font-size:22px;}
+.member span{color:gold;font-size:14px;text-transform:uppercase;}
+.member p{margin-top:8px;font-size:14px;color:#d1d1d1;line-height:1.5;}
+
+/* Portfolio */
+.portfolio-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:25px;margin-top:40px;
+}
+.project{
+  background:rgba(255,255,255,0.06);padding:20px;border-radius:12px;
+  border:1px solid rgba(255,215,0,0.3);
+}
+.project h4{color:gold;margin-bottom:8px;}
+
+/* Testimonials */
+.testimonials{
+  display:flex;overflow-x:auto;gap:25px;scroll-snap-type:x mandatory;padding:20px 0;
+}
+.testimonials::-webkit-scrollbar{display:none;}
+.quote{
+  scroll-snap-align:center;
+  min-width:320px;background:rgba(255,255,255,0.07);padding:20px;border-radius:12px;
+  border:1px solid rgba(255,215,0,0.3);
+}
+.quote p{font-size:15px;color:#e6e6e6;margin-bottom:10px;}
+.quote h5{color:gold;}
+
+/* Footer */
+footer{text-align:center;padding:60px 0;color:#aaa;font-size:14px;}
+</style>
+</head>
+<body>
+
+<div class="logo"></div>
+
+<header class="hero">
+  <h1>WebCred Solutions</h1>
+  <p>We create elite, award‑level digital experiences for businesses, governments & innovators.</p>
+</header>
+
+<section>
+  <h2>Our Mission</h2>
+  <p class="container" style="text-align:center;color:#ccc;max-width:900px;">
+    To elevate African innovation to global standards through premium software, brand presence,
+    and powerful data systems that bring clarity, trust & impact.
+  </p>
+</section>
+
+<section>
+  <h2>Meet The Founders</h2>
+  <div class="team-grid container">
+
+    <div class="member">
+      <img src="https://placehold.co/260x260/gold/black?text=Lamin+Ceesay" />
+      <h3>Lamin Ceesay</h3>
+      <span>Founder & CEO</span>
+      <p>Visionary systems architect leading WebCred’s strategic growth. Expert in web platforms for institutions and NGOs.</p>
+    </div>
+
+    <div class="member">
+      <img src="https://placehold.co/260x260/silver/black?text=Foday+Kebbeh" />
+      <h3>Foday Kebbeh</h3>
+      <span>Chief Operations & Product Design</span>
+      <p>Ensures seamless project execution, user-centered product workflows & premium visual design.</p>
+    </div>
+
+    <div class="member">
+      <img src="https://placehold.co/260x260/white/black?text=Fatoumatta+Bah" />
+      <h3>Fatoumatta Bah</h3>
+      <span>Communications & PR Lead</span>
+      <p>Leads brand identity, public relations & stakeholder communication to build trust and influence.</p>
+    </div>
+
+    <div class="member">
+      <img src="https://placehold.co/260x260/gray/black?text=Lamin+Sanneh" />
+      <h3>Lamin Sanneh</h3>
+      <span>Engagement & Community</span>
+      <p>Coordinates entrepreneur relations, outreach programs, recruitment & ecosystem visibility.</p>
+    </div>
+
+    <div class="member">
+      <img src="https://placehold.co/260x260/darkgray/white?text=Bakary+Baldeh" />
+      <h3>Bakary Baldeh</h3>
+      <span>Team Operations Support</span>
+      <p>Supports coordination, execution & quality assurance across projects and communications.</p>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2>Portfolio</h2>
+  <div class="portfolio-grid container">
+    <div class="project"><h4>Government Data Portal</h4><p>Secure structured data management system.</p></div>
+    <div class="project"><h4>NGO Impact Dashboard</h4><p>Visual reporting & evidence‑based grant transparency.</p></div>
+    <div class="project"><h4>Startup Launch Website</h4><p>Brand identity + automated onboarding system.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Testimonials</h2>
+  <div class="testimonials container">
+    <div class="quote"><p>“Their work made our grant application win.”</p><h5>— NGO Partner</h5></div>
+    <div class="quote"><p>“The platform increased our visibility globally.”</p><h5>— Startup Founder</h5></div>
+    <div class="quote"><p>“Professional. Fast. Elite execution.”</p><h5>— Government Client</h5></div>
+  </div>
+</section>
+
+<footer>© 2025 WebCred Solutions — Built to lead, designed to inspire.</footer>
+
+</body>
+</html>
   .card{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.12)}
   .hero-left h2{font-size:28px;margin:0;color:#073b29}
   .hero-left p{color:#123f2f;line-height:1.5}
