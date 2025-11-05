@@ -1,189 +1,572 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>WebCred Solutions</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>WebCred Solutions — Digital Trust & Data Systems</title>
+<meta name="description" content="WebCred Solutions: secure, grant-ready websites and data systems for startups, NGOs and government." />
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f7f7f7;
-  color: #333;
-}
-header {
-  background: linear-gradient(135deg, gold, #e5e4e2, #b9f2ff);
-  padding: 60px 20px;
-  text-align: center;
-  position: relative;
-}
-.logo {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: #fff;
-  border: 3px solid gold;
-  animation: spin 6s linear infinite;
-}
-@keyframes spin {
-  0% {transform: rotate(0deg);}
-  100% {transform: rotate(360deg);}
-}
-.hero-title {
-  font-size: 48px;
-  font-weight: bold;
-  color: #222;
-}
-.hero-subtitle {
-  font-size: 20px;
-  margin-top: 10px;
-}
-.section {
-  padding: 60px 20px;
-  text-align: center;
-}
-.section-title {
-  font-size: 32px;
-  margin-bottom: 40px;
-}
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  max-width: 1100px;
-  margin: auto;
-}
-.card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transition: transform .3s;
-}
-.card:hover {
-  transform: translateY(-5px);
-}
-.card img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 12px;
-  background: #ddd;
-}
-.card h3 {
-  margin-top: 15px;
-  font-size: 22px;
-  font-weight: bold;
-}
-.card p {
-  font-size: 14px;
-  margin-top: 5px;
-  color: #666;
-}
-.carousel-container {
-  max-width: 800px;
-  margin: auto;
-  background: #fff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.video-placeholder {
-  width: 100%;
-  height: 300px;
-  background: #ccc;
-  border-radius: 12px;
-  margin-bottom: 15px;
-}
-.testimonial {
-  font-style: italic;
-  color: #444;
-}
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-  max-width: 1100px;
-  margin: auto;
-}
-.portfolio-item {
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.footer {
-  background: #111;
-  color: #eee;
-  padding: 30px;
-  text-align: center;
-  margin-top: 40px;
-}
+  :root{
+    --bg:#061022;
+    --card:#071732;
+    --muted:#9fb3c8;
+    --text:#e6eef6;
+    --gold-1:#ffd166; --gold-2:#ffb703;
+    --silver-1:#dbe7ef; --silver-2:#9db4c0;
+    --diamond-1:#cfe9ff; --diamond-2:#8ad6ff;
+    --accent:#7c3aed;
+    --glass: rgba(255,255,255,0.04);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,var(--bg) 0%, #02101a 100%);color:var(--text);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1200px;margin:0 auto;padding:28px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .logo-wrap{width:72px;height:72px;border-radius:14px;background:linear-gradient(135deg,var(--gold-1),var(--accent));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(124,58,237,0.18);position:relative;overflow:hidden}
+  .logo{width:54px;height:54px;transform-origin:center;animation:spin 6s linear infinite}
+  @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+  h1{font-size:20px;margin:0}
+  header p{margin:0;color:var(--muted);font-size:13px}
+
+  nav{display:flex;gap:12px}
+  .btn{padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#e11d48);color:white;font-weight:700;border:none;cursor:pointer}
+  .ghost{padding:8px 12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);cursor:pointer}
+
+  /* Hero Banner */
+  .hero{margin-top:22px;border-radius:14px;overflow:hidden;display:grid;grid-template-columns:1fr 420px;gap:20px;align-items:stretch}
+  .hero-left{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:28px;border-radius:14px}
+  .hero-left h2{font-size:32px;margin:0 0 12px}
+  .hero-left p{color:var(--muted);line-height:1.5}
+  .kpis{display:flex;gap:12px;margin-top:14px}
+  .kpi{background:var(--glass);padding:12px;border-radius:10px;text-align:center;min-width:110px}
+  .kpi b{display:block;font-size:18px}
+  .hero-cta{margin-top:18px;display:flex;gap:12px}
+  .hero-right{background:linear-gradient(135deg,var(--diamond-1),var(--diamond-2));border-radius:12px;padding:12px;display:flex;flex-direction:column}
+  .video-thumb{flex:1;border-radius:10px;background:linear-gradient(135deg,#fff,#e6f4ff);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .video-thumb button{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:12px 18px;border-radius:999px;border:none;background:rgba(0,0,0,0.6);color:white;font-weight:700;cursor:pointer}
+
+  /* Team Card Grid */
+  section{margin-top:26px}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:18px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.35)}
+  .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px}
+  .member{border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(124,58,237,0.02));padding:14px;border:1px solid rgba(255,255,255,0.03)}
+  .member-top{display:flex;gap:12px;align-items:center}
+  .avatar{width:88px;height:88px;border-radius:12px;background:linear-gradient(135deg,var(--silver-1),var(--silver-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#052;flex-shrink:0;overflow:hidden}
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .role{font-weight:800}
+  .exp{font-size:13px;color:var(--muted);margin-top:6px}
+  .expect{margin-top:12px;font-size:14px;color:var(--text);line-height:1.5}
+  .expect ul{margin:8px 0 0 18px}
+
+  /* Portfolio */
+  .portfolio{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+  .proj{border-radius:12px;overflow:hidden}
+  .proj img{width:100%;display:block}
+  .proj-desc{padding:12px;background:rgba(255,255,255,0.02)}
+
+  /* Testimonials + Video Carousel */
+  .carousel{display:flex;gap:12px;align-items:stretch}
+  .testimonials{flex:1;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:16px;border-radius:12px}
+  .testimonial-item{display:none}
+  .testimonial-item.active{display:block}
+  .testimonial-item p{font-style:italic;color:var(--text)}
+  .testimonial-meta{margin-top:8px;color:var(--muted)}
+  .video-carousel{width:420px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,var(--diamond-1),var(--diamond-2));padding:12px}
+  .video-frame{width:100%;height:250px;background:#abc;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative}
+  .carousel-controls{display:flex;gap:8px;margin-top:10px;justify-content:center}
+
+  /* Pricing tiers */
+  .pricing{display:flex;gap:12px;margin-top:12px}
+  .tier{flex:1;padding:18px;border-radius:12px;text-align:center}
+  .gold{background:linear-gradient(180deg,var(--gold-1),var(--gold-2));color:#071017}
+  .silver{background:linear-gradient(180deg,var(--silver-1),var(--silver-2));color:#041127}
+  .diamond{background:linear-gradient(180deg,var(--diamond-1),var(--diamond-2));color:#021224}
+
+  footer{margin-top:30px;padding:18px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.015),transparent);text-align:center;color:var(--muted)}
+
+  /* Responsive */
+  @media(max-width:980px){
+    .hero{grid-template-columns:1fr}
+    .team-grid{grid-template-columns:repeat(2,1fr)}
+    .portfolio{grid-template-columns:1fr}
+    .carousel{flex-direction:column}
+    .video-carousel{width:100%}
+  }
+  @media(max-width:680px){
+    .team-grid{grid-template-columns:1fr}
+    nav{display:none}
+    .logo-wrap{width:56px;height:56px}
+    .wrap{padding:14px}
+  }
 </style>
 </head>
 <body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo-wrap" title="WebCred Solutions logo">
+          <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="lg" x1="0" x2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#ffd166"/></linearGradient>
+            </defs>
+            <rect x="8" y="8" width="84" height="84" rx="14" fill="url(#lg)"></rect>
+            <path d="M30 62 L50 32 L70 62 Z" fill="#7c3aed"/>
+          </svg>
+        </div>
+        <div>
+          <h1>WebCred Solutions</h1>
+          <p>Trusted digital systems for startups, NGOs and government</p>
+        </div>
+      </div>
 
-<header>
-  <div class="logo"></div>
-  <h1 class="hero-title">WebCred Solutions</h1>
-  <p class="hero-subtitle">We build digital trust through powerful web systems.</p>
-</header>
+      <nav>
+        <button class="ghost" onclick="scrollToSection('portfolio')">Portfolio</button>
+        <button class="ghost" onclick="scrollToSection('services')">Services</button>
+        <button class="ghost" onclick="scrollToSection('team')">Team</button>
+        <button class="btn" onclick="alert('Request a demo: hello@webcred.solutions')">Book a Demo</button>
+      </nav>
+    </header>
 
-<section class="section">
-  <h2 class="section-title">Meet Our Team</h2>
-  <div class="team-grid">
-    <div class="card">
-      <img src="" alt="Photo Placeholder">
-      <h3>Lamin Ceesay</h3>
-      <p>Founder & CEO — Lead Developer & Strategic Vision</p>
-    </div>
-    <div class="card">
-      <img src="" alt="Photo Placeholder">
-      <h3>Foday Kebbeh</h3>
-      <p>COO & Product Designer — Oversees Operational Excellence</p>
-    </div>
-    <div class="card">
-      <img src="" alt="Photo Placeholder">
-      <h3>Fatoumatta Bah</h3>
-      <p>Communications & PR — Brand Image and Media Relations</p>
-    </div>
-    <div class="card">
-      <img src="" alt="Photo Placeholder">
-      <h3>Lamin Sanneh</h3>
-      <p>Entrepreneur Engagement — Client Relations & Outreach</p>
-    </div>
-    <div class="card">
-      <img src="" alt="Photo Placeholder">
-      <h3>Bakary Baldeh</h3>
-      <p>Support Developer & Client Assistant</p>
+    <!-- HERO -->
+    <section class="hero" aria-label="hero">
+      <div class="hero-left card">
+        <h2>We build secure, grant-ready websites & data platforms that win trust.</h2>
+        <p>WebCred Solutions designs and develops websites, admin portals and verification systems tailored for grant applications, government transparency and NGO data management. From prototype to production — we guide you through every step and make your data credible.</p>
+
+        <div class="kpis">
+          <div class="kpi"><b>+50</b><span style="color:var(--muted);font-size:12px">Projects Delivered</span></div>
+          <div class="kpi"><b>98%</b><span style="color:var(--muted);font-size:12px">Client Satisfaction</span></div>
+          <div class="kpi"><b>12</b><span style="color:var(--muted);font-size:12px">Grants Supported</span></div>
+        </div>
+
+        <div class="hero-cta">
+          <button class="btn" onclick="alert('Thanks — we will contact you to schedule a demo.')">Request a Demo</button>
+          <button class="ghost" onclick="scrollToSection('contact')">Contact Sales</button>
+        </div>
+      </div>
+
+      <aside class="hero-right">
+        <div class="video-thumb">
+          <!-- Video thumbnail placeholder -->
+          <svg width="80%" height="60%" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100%" height="100%" rx="10" fill="#ffffff" />
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="22" fill="#012">Intro video / product demo placeholder</text>
+          </svg>
+          <button onclick="openModal('video1')">Watch Intro</button>
+        </div>
+        <div style="padding:10px;color:#023047;font-size:13px">
+          <strong>Video description</strong>
+          <div style="color:var(--muted);margin-top:6px">30–60 second intro featuring team, dashboards, verification workflow and short client comments — used on proposals and landing pages to build trust quickly.</div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="card">
+      <h3>About WebCred Solutions</h3>
+      <p style="color:var(--muted)">Founded and led by web professionals with hands-on experience building real websites for NGOs, startups and government offices — WebCred focuses on secure data collection, accessible dashboards and outputs that help organisations win grants and operate transparently.</p>
+
+      <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
+        <div style="flex:1;min-width:220px;padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent)">
+          <h4>Mission</h4>
+          <p class="exp">To empower organisations with reliable digital tools that improve accountability, grant-readiness and decision-making.</p>
+        </div>
+        <div style="flex:1;min-width:220px;padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent)">
+          <h4>Vision</h4>
+          <p class="exp">To be the leading digital transformation partner in West Africa — bringing secure, beautiful and usable systems to organisations serving communities.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM (Card Grid with image placeholders, roles, expectations, experience) -->
+    <section id="team">
+      <h3>Team & Roles — Detailed</h3>
+      <p style="color:var(--muted)">Every member is a full-stack contributor — they design, develop, and help bring clients. Below are the responsibilities, expectations and experience for each team member. Click images to replace with real photos when ready.</p>
+
+      <div class="team-grid" style="margin-top:12px">
+        <!-- Lamin Ceesay -->
+        <div class="member" aria-labelledby="lamin">
+          <div class="member-top">
+            <div class="avatar" title="Lamin Ceesay photo placeholder">
+              <!-- SVG placeholder image -->
+              <svg width="100%" height="100%" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100%" height="100%" rx="8" fill="#e6eef6"/>
+                <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="48" fill="#012">LC</text>
+              </svg>
+            </div>
+            <div>
+              <div id="lamin" class="role">Lamin Ceesay — Founder & CEO</div>
+              <div class="exp">Lead strategist; product owner; client relationships; technical oversight. Full-stack developer with production experience building donor dashboards and verification systems.</div>
+            </div>
+          </div>
+
+          <div class="expect">
+            <strong>Core Responsibilities</strong>
+            <ul>
+              <li>Define product vision, go-to-market & partnership strategy.</li>
+              <li>Lead architecture decisions and approve final builds.</li>
+              <li>Primary client lead for enterprise & government contracts.</li>
+              <li>Ensure security, compliance and grant-readiness for all projects.</li>
+            </ul>
+
+            <strong>Expectations</strong>
+            <ul>
+              <li>Deliver quarterly business targets and onboard strategic clients.</li>
+              <li>Maintain code contributions for backend modules and integrations.</li>
+              <li>Mentor junior devs and manage investor relations.</li>
+            </ul>
+
+            <strong>Experience / Portfolio</strong>
+            <ul>
+              <li>Built a grant verification site and donor dashboard used by local NGOs to track disbursements — (project link placeholder).</li>
+              <li>Led integration with payment gateways and audit logs for compliance.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Foday Kebbeh -->
+        <div class="member" aria-labelledby="foday">
+          <div class="member-top">
+            <div class="avatar" title="Foday Kebbeh photo placeholder">
+              <svg width="100%" height="100%" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100%" height="100%" rx="8" fill="#fef3c7"/>
+                <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="40" fill="#012">FK</text>
+              </svg>
+            </div>
+            <div>
+              <div id="foday" class="role">Foday Kebbeh — COO & Product Design Officer</div>
+              <div class="exp">Product design, UX, operations and development. Crafts intuitive interfaces and manages sprint delivery.</div>
+            </div>
+          </div>
+
+          <div class="expect">
+            <strong>Core Responsibilities</strong>
+            <ul>
+              <li>Oversee product roadmaps, design systems and development sprints.</li>
+              <li>Lead UI/UX design and visual identity for client projects.</li>
+              <li>Manage QA, deployment steps and release processes.</li>
+            </ul>
+
+            <strong>Expectations</strong>
+            <ul>
+              <li>Produce pixel-perfect prototypes and ensure accessibility.</li>
+              <li>Contribute to frontend codebase with reusable components.</li>
+              <li>Create onboarding materials and operational SOPs.</li>
+            </ul>
+
+            <strong>Experience / Portfolio</strong>
+            <ul>
+              <li>Designed and implemented a secure admin portal used for grant reporting — (project link placeholder).</li>
+              <li>Built UI component library used across multiple customer projects.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Fatoumatta Bah -->
+        <div class="member" aria-labelledby="fatoumatta">
+          <div class="member-top">
+            <div class="avatar" title="Fatoumatta Bah photo placeholder">
+              <svg width="100%" height="100%" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100%" height="100%" rx="8" fill="#ffd166"/>
+                <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="36" fill="#012">FB</text>
+              </svg>
+            </div>
+            <div>
+              <div id="fatoumatta" class="role">Fatoumatta Bah — Communications & PRO</div>
+              <div class="exp">Brand strategy, client communications, public relations and proposal writing.</div>
+            </div>
+          </div>
+
+          <div class="expect">
+            <strong>Core Responsibilities</strong>
+            <ul>
+              <li>Manage external communications, proposals and grant narratives.</li>
+              <li>Coordinate PR activities, testimonials and client references.</li>
+              <li>Draft and maintain case studies and website content.</li>
+            </ul>
+
+            <strong>Expectations</strong>
+            <ul>
+              <li>Produce compelling grant-facing documentation and success stories.</li>
+              <li>Maintain client relationships and media outreach.</li>
+              <li>Help prepare application materials and funding proposals.</li>
+            </ul>
+
+            <strong>Experience / Portfolio</strong>
+            <ul>
+              <li>Led communications for a multi-donor project and prepared documentation that improved grant success rate — (project link placeholder).</li>
+              <li>Authored case studies used in grant submissions and impact reports.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Lamin Sanneh -->
+        <div class="member" aria-labelledby="lamins">
+          <div class="member-top">
+            <div class="avatar" title="Lamin Sanneh photo placeholder">
+              <svg width="100%" height="100%" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100%" height="100%" rx="8" fill="#9db4c0"/>
+                <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="36" fill="#012">LS</text>
+              </svg>
+            </div>
+            <div>
+              <div id="lamins" class="role">Lamin Sanneh — Entrepreneur Engagement Officer</div>
+              <div class="exp">Client engagement, demos, partnership support and feedback collection.</div>
+            </div>
+          </div>
+
+          <div class="expect">
+            <strong>Core Responsibilities</strong>
+            <ul>
+              <li>Run demos and workshops for entrepreneurs and NGOs.</li>
+              <li>Assist PRO with outreach and client onboarding.</li>
+              <li>Collect user feedback and channel it into product improvements.</li>
+            </ul>
+
+            <strong>Expectations</strong>
+            <ul>
+              <li>Host at least one community demo per month and maintain demo scripts.</li>
+              <li>Reproduce demo environments and ensure demo data is realistic and secure.</li>
+              <li>Contribute to integration and deployment tasks as needed.</li>
+            </ul>
+
+            <strong>Experience / Portfolio</strong>
+            <ul>
+              <li>Led entrepreneur outreach and coordinated platform trials for local startups — (project link placeholder).</li>
+              <li>Prepared demo kits and pilot reports used for stakeholder buy-in.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Bakary Baldeh -->
+        <div class="member" aria-labelledby="bakary">
+          <div class="member-top">
+            <div class="avatar" title="Bakary Baldeh photo placeholder">
+              <svg width="100%" height="100%" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100%" height="100%" rx="8" fill="#cfe9ff"/>
+                <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="36" fill="#012">BB</text>
+              </svg>
+            </div>
+            <div>
+              <div id="bakary" class="role">Bakary Baldeh — Assistant (Programs & Support)</div>
+              <div class="exp">Support operations, documentation and development assistance.</div>
+            </div>
+          </div>
+
+          <div class="expect">
+            <strong>Core Responsibilities</strong>
+            <ul>
+              <li>Support engagement, documentation and client demo preparation.</li>
+              <li>Maintain project records, deployment logs and testing notes.</li>
+              <li>Assist developers with routine tasks and QA.</li>
+            </ul>
+
+            <strong>Expectations</strong>
+            <ul>
+              <li>Keep documentation up-to-date and manage internal task trackers.</li>
+              <li>Support CI/CD and staging deployments.</li>
+              <li>Contribute to front-end work and small feature tasks.</li>
+            </ul>
+
+            <strong>Experience / Portfolio</strong>
+            <ul>
+              <li>Provided critical support for a data collection rollout and maintained project logs and reports — (project link placeholder).</li>
+              <li>Assisted in QA and deployment for multiple client pilot sites.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="card">
+      <h3>Services</h3>
+      <div class="kpis" style="margin-top:8px">
+        <div class="kpi"><b>Websites</b><div style="font-size:13px;color:var(--muted)">Grant-ready websites, CMS, SSL & hosting</div></div>
+        <div class="kpi"><b>Data Systems</b><div style="font-size:13px;color:var(--muted)">Dashboards, M&E exports, verification flows</div></div>
+        <div class="kpi"><b>Support</b><div style="font-size:13px;color:var(--muted)">Training, backups, audits</div></div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="card">
+      <h3>Pricing Tiers — Gold, Silver & Diamond</h3>
+      <p style="color:var(--muted)">Choose a tier that fits your scale. Each package includes a 3-month support window and 2 training sessions.</p>
+      <div class="pricing">
+        <div class="tier gold">
+          <h4>Gold</h4>
+          <p><strong>Starter</strong> — Professional website, 5 pages, basic CMS, SSL & hosting setup.</p>
+          <p><strong>Price:</strong> From $1,200</p>
+        </div>
+        <div class="tier silver">
+          <h4>Silver</h4>
+          <p><strong>Advanced</strong> — Admin portal, reporting dashboard, user roles, 10 pages.</p>
+          <p><strong>Price:</strong> From $3,800</p>
+        </div>
+        <div class="tier diamond">
+          <h4>Diamond</h4>
+          <p><strong>Enterprise</strong> — Custom data system, API integrations, verification workflows, on-site training.</p>
+          <p><strong>Price:</strong> From $12,000</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section id="portfolio">
+      <h3>Portfolio & Case Studies</h3>
+      <p style="color:var(--muted)">Selected projects — each item includes description and outcomes. Click link placeholders to view live sites or reports.</p>
+      <div class="portfolio" style="margin-top:10px">
+        <div class="proj card">
+          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='400'><rect width='100%' height='100%' fill='%23ffd166'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='22' font-family='Arial' fill='%23000'>Donor Dashboard — NGO A</text></svg>" alt="Donor Dashboard">
+          <div class="proj-desc"><strong>Donor Dashboard — NGO A</strong><p class="exp">Problem: Donor needed transparent reporting. Outcome: Reduced reporting time by 70% and improved donor trust. <br><a href="#" onclick="alert('Open project link placeholder')">View live</a></p></div>
+        </div>
+
+        <div class="proj card">
+          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='400'><rect width='100%' height='100%' fill='%239db4c0'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='22' font-family='Arial' fill='%23000'>Grant Verification System — Local Gov</text></svg>" alt="Verification System">
+          <div class="proj-desc"><strong>Grant Verification System — Local Gov</strong><p class="exp">Problem: Manual verification slowed disbursements. Outcome: Faster approvals and improved compliance. <br><a href="#" onclick="alert('Open project link placeholder')">View live</a></p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials + Video Carousel -->
+    <section class="card">
+      <h3>What People Say & Video</h3>
+      <div class="carousel">
+        <div class="testimonials">
+          <div class="testimonial-item active" id="t1">
+            <p>"WebCred Solutions delivered a robust donor dashboard that transformed how we report to donors. Their team is professional and responsive."</p>
+            <div class="testimonial-meta">— NGO Director, NGO A</div>
+          </div>
+          <div class="testimonial-item" id="t2">
+            <p>"Their verification system reduced admin time and increased compliance. Highly recommend for government pilots."</p>
+            <div class="testimonial-meta">— Procurement Lead, Local Gov</div>
+          </div>
+          <div class="carousel-controls">
+            <button class="ghost" onclick="prevTestimonial()">Prev</button>
+            <button class="ghost" onclick="nextTestimonial()">Next</button>
+          </div>
+        </div>
+
+        <div class="video-carousel">
+          <div class="video-frame" id="video-frame">
+            <!-- video frames / thumbnails -->
+            <div class="vf active" data-id="video1" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+              <div style="text-align:center">
+                <div style="font-weight:800">Intro Video</div>
+                <div style="color:var(--muted);margin-top:8px">30–60 second company intro</div>
+                <button class="btn" style="margin-top:12px" onclick="openModal('video1')">Play</button>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px;justify-content:center">
+            <button class="ghost" onclick="openModal('video1')">Open Intro</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Images & Descriptions -->
+    <section class="card">
+      <h3>Images & Descriptions (Sample assets)</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px">
+        <div class="card">
+          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='200'><rect width='100%' height='100%' fill='%238ad6ff'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='16' font-family='Arial' fill='%23012'>Dashboard screenshot — live metrics and export</text></svg>" alt="dashboard" />
+          <p class="exp" style="margin-top:8px">Caption: Example dashboard showing program reach, finances and exports — ideal for donors and M&E teams.</p>
+        </div>
+        <div class="card">
+          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='200'><rect width='100%' height='100%' fill='%23ffd166'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='16' font-family='Arial' fill='%23012'>Verification workflow — secure uploads</text></svg>" alt="verification" />
+          <p class="exp" style="margin-top:8px">Caption: Verification UI: secure document submission and admin approval workflow — useful for grant authentication.</p>
+        </div>
+        <div class="card">
+          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='200'><rect width='100%' height='100%' fill='%239db4c0'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='16' font-family='Arial' fill='%23012'>Mobile friendly forms & offline sync</text></svg>" alt="mobile">
+          <p class="exp" style="margin-top:8px">Caption: Mobile-first forms that can sync offline — essential for field data collection in remote areas.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="card">
+      <h3>Contact & Next Steps</h3>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px">
+        <div style="flex:1;min-width:260px" class="card">
+          <h4>Book a demo</h4>
+          <p class="exp">We’ll run a 20-minute demo tailored to your organization and provide a short proposal outlining scope and costs.</p>
+          <p><strong>Email:</strong> hello@webcred.solutions</p>
+          <p><strong>Phone / WhatsApp:</strong> +220 7XXXXXXX</p>
+        </div>
+        <div style="flex:1;min-width:260px" class="card">
+          <h4>Request a Quote</h4>
+          <p class="exp">Share your project details and we’ll respond with a timeline and cost estimate within 3 business days.</p>
+          <button class="btn" onclick="alert('Request Quote: hello@webcred.solutions')">Request Quote</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+        <div>© <strong>WebCred Solutions</strong> 2025</div>
+        <div>|</div>
+        <div style="color:var(--muted)">Privacy · Terms · Security</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Video Modal (simple) -->
+  <div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;padding:20px;z-index:9999">
+    <div style="max-width:900px;width:100%;background:#000;border-radius:12px;overflow:hidden">
+      <div style="position:relative;padding-top:56.25%">
+        <!-- embed placeholder iframe -->
+        <iframe id="modal-iframe" src="" frameborder="0" allow="autoplay; fullscreen" style="position:absolute;inset:0;width:100%;height:100%"></iframe>
+      </div>
+      <div style="padding:8px;text-align:right">
+        <button class="ghost" onclick="closeModal()">Close</button>
+      </div>
     </div>
   </div>
-</section>
 
-<section class="section">
-  <h2 class="section-title">Our Work (Portfolio)</h2>
-  <div class="portfolio-grid">
-    <div class="portfolio-item">Project Placeholder 1</div>
-    <div class="portfolio-item">Project Placeholder 2</div>
-    <div class="portfolio-item">Project Placeholder 3</div>
-  </div>
-</section>
+<script>
+  function scrollToSection(id){
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  }
 
-<section class="section">
-  <h2 class="section-title">What People Say & Video</h2>
-  <div class="carousel-container">
-    <div class="video-placeholder"></div>
-    <p class="testimonial">"WebCred Solutions provided outstanding service. Highly recommended!" — Client</p>
-  </div>
-</section>
+  // Testimonials carousel
+  let tIndex = 0;
+  const testimonials = document.querySelectorAll('.testimonial-item');
+  function showTestimonial(i){
+    testimonials.forEach((t, idx)=> t.classList.toggle('active', idx===i));
+  }
+  function nextTestimonial(){ tIndex = (tIndex+1) % testimonials.length; showTestimonial(tIndex); }
+  function prevTestimonial(){ tIndex = (tIndex-1 + testimonials.length) % testimonials.length; showTestimonial(tIndex); }
+  // auto rotate every 6s
+  setInterval(()=> nextTestimonial(), 6000);
 
-<footer class="footer">
-  © 2025 WebCred Solutions. All Rights Reserved.
-</footer>
+  // Modal video
+  function openModal(id){
+    const iframe = document.getElementById('modal-iframe');
+    // placeholder: user can replace with actual video link (YouTube/Vimeo)
+    iframe.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1';
+    document.getElementById('modal').style.display='flex';
+  }
+  function closeModal(){
+    const iframe = document.getElementById('modal-iframe');
+    iframe.src = '';
+    document.getElementById('modal').style.display='none';
+  }
 
+  // Accessibility: close modal with escape
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
+
+  // simple placeholder safe-guards for logo click - rotate faster briefly
+  const logo = document.querySelector('.logo');
+  if(logo){
+    logo.addEventListener('click', ()=>{
+      logo.style.animation = 'spin 1s linear 1';
+      setTimeout(()=> logo.style.animation = 'spin 6s linear infinite', 1100);
+    });
+  }
+</script>
 </body>
 </html>
