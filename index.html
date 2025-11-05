@@ -1,163 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WebCred Solutions — Admin Locked</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  /* Reset & base */
-  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
-  body { background:#f0f2f5; color:#222; min-height:100vh; }
-
-  /* Login container */
-  .login-screen {
-    display:flex; align-items:center; justify-content:center;
-    min-height:100vh;
-    background: linear-gradient(135deg, #eef2ff, #fef9e7);
-  }
-  .login-card {
-    width: 420px; background: #fff; padding: 28px; border-radius: 14px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: center;
-  }
-  .login-card h2 { margin-bottom: 12px; color:#111; }
-  .login-card p { color:#6b6b6b; margin-bottom: 18px; }
-  .form-group { text-align:left; margin-bottom:14px; }
-  label { display:block; margin-bottom:6px; font-weight:600; color:#333; font-size:0.95rem; }
-  input[type="text"], input[type="password"] {
-    width:100%; padding:12px 14px; border-radius:8px; border:1px solid #e2e8f0; font-size:1rem;
-  }
-  .btn {
-    display:inline-block; padding:12px 22px; border-radius:10px; border:none; cursor:pointer;
-    background: linear-gradient(90deg,#ffbf47,#ff7f50); color:#fff; font-weight:700; margin-top:10px;
-  }
-  .error { color:#b00020; margin-top:10px; font-weight:600; }
-
-  /* Main site (hidden until login) */
-  .site { display:none; }
-
-  /* Header / Hero */
-  header {
-    background: linear-gradient(135deg, #FFD700, #B9F2FF);
-    color: #222; text-align: center; padding: 60px 20px; position: relative;
-  }
-  .logo { position: absolute; top: 18px; right: 18px; width:56px; height:56px; border-radius:50%; background:#fff; border:3px solid gold; animation:spin 6s linear infinite; }
-  @keyframes spin { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
-  .hero-title { font-size:40px; font-weight:700; margin-bottom:8px; }
-  .hero-subtitle { font-size:16px; margin-top:6px; color:#222; opacity:0.9; }
-
-  /* Admin bar */
-  .admin-bar {
-    background:#111; color:#fff; padding:10px 18px; display:flex; justify-content:space-between; align-items:center;
-  }
-  .admin-bar .welcome { font-weight:600; }
-  .admin-bar button { background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.15); padding:8px 12px; border-radius:8px; cursor:pointer; }
-
-  /* Sections */
-  .section { padding:60px 20px; max-width:1150px; margin:20px auto; text-align:center; }
-  .section-title { font-size:30px; margin-bottom:22px; color:#222; }
-
-  /* Distinct topic sections */
-  .mission-section { background:#FFFAE5; color:#2b2b2b; border-radius:12px; padding:34px; margin-bottom:18px; }
-  .vision-section  { background:#E5F9FF; color:#123; border-radius:12px; padding:34px; margin-bottom:18px; }
-  .future-section  { background:#F5E5FF; color:#2b2b2b; border-radius:12px; padding:34px; margin-bottom:18px; }
-
-  .content { max-width: 900px; margin: 0 auto; font-size:16px; line-height:1.7; color:#333; }
-
-  /* Team grid */
-  .team-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; margin-top:20px; }
-  .card { background:#fff; padding:18px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.06); text-align:left; }
-  .card h3 { color:#ff7f50; margin-bottom:6px; }
-  .card p { font-weight:600; margin-bottom:8px; }
-
-  /* Portfolio */
-  .portfolio-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-top:20px; }
-  .portfolio-item { background:#fff; padding:18px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
-
-  /* Footer */
-  .footer { background:#111; color:#eee; padding:22px 18px; text-align:center; margin-top:30px; border-radius:8px; }
-
-  /* Responsive */
-  @media(max-width:720px) {
-    .login-card { width:92%; }
-    .hero-title { font-size:28px; }
-  }
-
-  /* small note */
-  .note { margin-top:12px; font-size:0.9rem; color:#666; }
+* { box-sizing:border-box; margin:0; padding:0; font-family:'Montserrat',sans-serif; }
+body { background:#f0f2f5; color:#222; min-height:100vh; }
+/* Add your CSS for login, tabs, sections, team, portfolio, videos, footer here */
 </style>
 </head>
-<body>
-
-<!-- LOGIN SCREEN -->
-<div id="loginScreen" class="login-screen" aria-live="polite">
-  <div class="login-card" role="dialog" aria-label="Admin login">
+<body><!-- LOGIN SCREEN --><div id="loginScreen" class="login-screen">
+  <div class="login-card">
     <h2>Admin Login — WebCred</h2>
     <p>Enter your full name and admin password to access the site.</p>
-
-    <div class="form-group">
-      <label for="fullname">Full name</label>
-      <input id="fullname" type="text" placeholder="e.g. Lamin Ceesay" autocomplete="name" />
-    </div>
-
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input id="password" type="password" placeholder="Enter admin password" autocomplete="current-password" />
-    </div>
-
-    <button id="loginBtn" class="btn" type="button">Unlock Site</button>
-    <div id="err" class="error" role="status" aria-live="assertive" style="display:none"></div>
-
-    <p class="note">Demo only: this uses client-side authentication. For production, use server-side authentication (recommended).</p>
+    <input type="text" id="fullname" placeholder="Full Name" />
+    <input type="password" id="password" placeholder="Password" />
+    <button id="loginBtn">Unlock Site</button>
+    <div id="err" style="color:red; margin-top:10px;"></div>
   </div>
-</div>
-
-<!-- MAIN SITE (hidden until login) -->
-<div id="site" class="site" aria-hidden="true">
-
-  <!-- Admin top bar -->
-  <div class="admin-bar">
-    <div class="welcome" id="welcomeText">Welcome, Admin</div>
-    <div style="display:flex; gap:10px; align-items:center;">
-      <div style="color:#ddd; font-size:0.95rem;">Mode: Admin</div>
-      <button id="logoutBtn" title="Logout">Logout</button>
-    </div>
-  </div>
-
-  <!-- Header / Hero -->
-  <header>
-    <div class="logo" aria-hidden="true"></div>
-    <h1 class="hero-title">WebCred Solutions</h1>
-    <p class="hero-subtitle">We build digital trust through powerful web systems</p>
-  </header>
-
-  <!-- Mission -->
-  <section class="section">
-    <h2 class="section-title">Our Mission</h2>
-    <div class="mission-section">
-      <div class="content">
-        <p>To empower businesses and individuals in The Gambia and beyond by creating trustworthy, secure, and efficient web systems that enhance digital presence and streamline operations.</p>
-      </div>
-    </div>
-
-    <h2 class="section-title">Our Vision</h2>
-    <div class="vision-section">
-      <div class="content">
-        <p>To become the leading technology partner for organizations seeking innovative web solutions, fostering a digitally empowered ecosystem with reliability and transparency at its core.</p>
-      </div>
-    </div>
-
-    <h2 class="section-title">Future Plans</h2>
-    <div class="future-section">
-      <div class="content">
-        <p>Expand our portfolio of services to include AI-powered analytics, automated web systems, and training programs for local developers, ensuring sustainable growth and community impact through technology.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Team -->
-  <section class="section" aria-labelledby="teamTitle">
-    <h2 id="teamTitle" class="section-title">Meet Our Team</h2>
+</div><!-- MAIN SITE --><div id="site" class="site" style="display:none;">
+  <div class="navbar">
+    <button class="tab-btn active" data-target="home">Home</button>
+    <button class="tab-btn" data-target="team">Our Team</button>
+  </div>  <!-- HOME -->  <div id="home" class="section active">
+    <h2>Mission</h2>
+    <p>To empower businesses and individuals in The Gambia and beyond by creating trustworthy, secure, and efficient web systems that enhance digital presence and streamline operations.</p>
+    <h2>Vision</h2>
+    <p>To become the leading technology partner for organizations seeking innovative web solutions, fostering a digitally empowered ecosystem with reliability and transparency at its core.</p>
+    <h2>Future Plans</h2>
+    <p>Expand our portfolio to include AI-powered analytics, automated web systems, and developer training programs for sustainable growth.</p>
+    <h2>Our Work</h2>
+    <div>Project Placeholder 1</div>
+    <div>Project Placeholder 2</div>
+    <div>Project Placeholder 3</div>
+    <h2>Videos & Testimonials</h2>
+    <div>Video Placeholder</div>
+    <p>"WebCred Solutions provided outstanding service. Highly recommended!" — Client</p>
+  </div>  <!-- TEAM -->  <div id="team" class="section">
+    <h2>Meet Our Team</h2>
     <div class="team-grid">
       <div class="card">
         <h3>Lamin Ceesay</h3>
@@ -166,167 +47,80 @@
           <li>Defines company vision and long-term strategy</li>
           <li>Leads business development and partnerships</li>
           <li>Oversees project execution and client satisfaction</li>
+          <li>Coordinates coding and technical development efforts</li>
         </ul>
       </div>
-
       <div class="card">
         <h3>Foday Kebbeh</h3>
         <p>Chief Operations & Product Designer</p>
         <ul>
           <li>Designs UI/UX for websites and dashboards</li>
           <li>Manages internal operations and workflow</li>
+          <li>Ensures timely delivery of projects</li>
+          <li>Collaborates on product features and coding tasks</li>
         </ul>
       </div>
-
       <div class="card">
         <h3>Fatoumatta Bah</h3>
         <p>Communication & PRO</p>
         <ul>
           <li>Manages public relations and client communications</li>
           <li>Promotes services and products on various channels</li>
+          <li>Handles PR and social media outreach</li>
+          <li>Contributes to coding and project support when needed</li>
         </ul>
       </div>
-
       <div class="card">
         <h3>Lamin Sanneh</h3>
         <p>Entrepreneur Engagement Officer</p>
         <ul>
           <li>Assists in client engagement and communication</li>
+          <li>Supports PR and communication campaigns</li>
           <li>Provides technical coding support across projects</li>
+          <li>Assists Fatoumatta Bah in outreach tasks</li>
         </ul>
       </div>
-
       <div class="card">
         <h3>Bakary Baldeh</h3>
         <p>Support Developer & Assistant</p>
         <ul>
-          <li>Assists with communications and client follow-ups</li>
+          <li>Supports Lamin Sanneh and Fatoumatta Bah in daily tasks</li>
+          <li>Assists in communications and client follow-ups</li>
           <li>Contributes to coding and technical development</li>
+          <li>Helps maintain project timelines and documentation</li>
         </ul>
       </div>
     </div>
-  </section>
+  </div>
+</div><script>
+const loginBtn = document.getElementById('loginBtn');
+const loginScreen = document.getElementById('loginScreen');
+const site = document.getElementById('site');
+const err = document.getElementById('err');
+const fullnameInput = document.getElementById('fullname');
+const passwordInput = document.getElementById('password');
+const tabBtns = document.querySelectorAll('.tab-btn');
 
-  <!-- Portfolio -->
-  <section class="section" aria-labelledby="portfolioTitle">
-    <h2 id="portfolioTitle" class="section-title">Our Work (Portfolio)</h2>
-    <div class="portfolio-grid">
-      <div class="portfolio-item">Project Placeholder 1</div>
-      <div class="portfolio-item">Project Placeholder 2</div>
-      <div class="portfolio-item">Project Placeholder 3</div>
-    </div>
-  </section>
-
-  <!-- Video & Testimonial -->
-  <section class="section" aria-labelledby="videoTitle">
-    <h2 id="videoTitle" class="section-title">Video & Testimonials</h2>
-    <div style="max-width:900px;margin:0 auto;background:#fff;padding:24px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.06);">
-      <div style="height:300px;background:#ddd;border-radius:8px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:#666;">Video Placeholder</div>
-      <p style="font-style:italic;color:#444;">"WebCred Solutions provided outstanding service. Highly recommended!" — Client</p>
-    </div>
-  </section>
-
-  <footer class="footer">
-    © 2025 WebCred Solutions. All Rights Reserved.
-  </footer>
-
-</div>
-
-<script>
-/*
-  Client-side admin gate:
-  - Password (case-sensitive): gambia2025
-  - Enter a non-empty Full name and the password to unlock the site.
-  - This is a demo client-side check only (NOT secure for production).
-*/
-
-(function(){
-  const ADMIN_PASSWORD = 'gambia2025'; // demo password. Visible in source (client-side) — not secure.
-
-  const loginScreen = document.getElementById('loginScreen');
-  const site = document.getElementById('site');
-  const loginBtn = document.getElementById('loginBtn');
-  const logoutBtn = document.getElementById('logoutBtn');
-  const err = document.getElementById('err');
-  const fullnameInput = document.getElementById('fullname');
-  const passwordInput = document.getElementById('password');
-  const welcomeText = document.getElementById('welcomeText');
-
-  // Check sessionStorage for existing valid session
-  function checkSession() {
-    const logged = sessionStorage.getItem('webcred_logged_in');
-    const name = sessionStorage.getItem('webcred_admin_name');
-    if (logged === 'true' && name) {
-      showSite(name);
-      return true;
-    }
-    return false;
+loginBtn.addEventListener('click', () => {
+  const name = fullnameInput.value.trim();
+  const pass = passwordInput.value.trim();
+  if(pass === 'gambia2025') {
+    loginScreen.style.display='none';
+    site.style.display='block';
+    err.style.display='none';
+  } else {
+    err.textContent = 'Incorrect password';
+    err.style.display='block';
   }
+});
 
-  function showSite(name) {
-    loginScreen.style.display = 'none';
-    site.style.display = 'block';
-    site.setAttribute('aria-hidden','false');
-    welcomeText.textContent = 'Welcome, ' + (name || 'Admin');
-  }
-
-  function showLogin() {
-    loginScreen.style.display = 'flex';
-    site.style.display = 'none';
-    site.setAttribute('aria-hidden','true');
-    err.style.display = 'none';
-    passwordInput.value = '';
-    // focus name field for convenience
-    fullnameInput.focus();
-  }
-
-  loginBtn.addEventListener('click', function(){
-    const name = fullnameInput.value.trim();
-    const pass = passwordInput.value;
-    // simple validations
-    if (!name) {
-      err.style.display = 'block';
-      err.textContent = 'Please enter your full name.';
-      return;
-    }
-    if (!pass) {
-      err.style.display = 'block';
-      err.textContent = 'Please enter the admin password.';
-      return;
-    }
-    if (pass === ADMIN_PASSWORD) {
-      // store session (sessionStorage cleared when browser/tab closed)
-      sessionStorage.setItem('webcred_logged_in','true');
-      sessionStorage.setItem('webcred_admin_name', name);
-      showSite(name);
-    } else {
-      err.style.display = 'block';
-      err.textContent = 'Incorrect password. Access denied.';
-      passwordInput.value = '';
-      passwordInput.focus();
-    }
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', ()=>{
+    tabBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+    document.getElementById(btn.dataset.target).classList.add('active');
   });
-
-  // allow Enter key to submit from password field
-  passwordInput.addEventListener('keyup', function(e){
-    if (e.key === 'Enter') loginBtn.click();
-  });
-  fullnameInput.addEventListener('keyup', function(e){
-    if (e.key === 'Enter') passwordInput.focus();
-  });
-
-  logoutBtn.addEventListener('click', function(){
-    sessionStorage.removeItem('webcred_logged_in');
-    sessionStorage.removeItem('webcred_admin_name');
-    showLogin();
-  });
-
-  // on load, check session
-  if (!checkSession()) {
-    showLogin();
-  }
-})();
-</script>
-
-</body>
+});
+</script></body>
 </html>
